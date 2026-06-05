@@ -25,7 +25,8 @@ It covers the initial setup from Homebrew installation and GitHub SSH access to 
 - [4. Initialize Dotfiles](#4-initialize-dotfiles)
 - [5. Apply the Brewfile](#5-apply-the-brewfile)
 - [6. Set Zsh as the Default Shell on Linux](#6-set-zsh-as-the-default-shell-on-linux)
-- [7. Sign in to Services](#7-sign-in-to-services)
+- [7. Install Essential Applications on Ubuntu](#7-install-essential-applications-on-ubuntu)
+- [8. Sign in to Services](#8-sign-in-to-services)
 - [Optional Quality Checks](#optional-quality-checks)
 
 ## Dependencies
@@ -68,42 +69,85 @@ This repository is an opinionated starting point rather than a universal worksta
 ↓
 3. chezmoi installation
 ↓
-4. Git identity configuration
+4. Dotfiles initialization and restore
 ↓
-5. Dotfiles restore
+5. Brewfile execution
 ↓
-6. Brewfile execution
+6. Linux default shell setup (Linux only)
 ↓
-7. Linux default shell setup
+7. Linux application setup (Linux only)
 ↓
 8. Service logins
 ```
+
+On macOS, skip steps 6 and 7 and continue directly from step 5 to step 8.
 
 ---
 
 ## 1. Install Homebrew
 
-Follow the official installation guide for your operating system:
+### macOS
 
-- [Install Homebrew on macOS](https://docs.brew.sh/Installation.html)
-- [Install Homebrew on Linux or WSL](https://docs.brew.sh/Homebrew-on-Linux)
-
-### Ubuntu / Debian prerequisites
-
-Some minimal Linux installations do not include `curl` or `git`. Install them before running the Homebrew installer:
+Install Homebrew with the official installer:
 
 ```bash
-sudo apt update
-sudo apt install -y curl git
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-After installation, follow the post-install instructions shown by Homebrew to add it to your shell environment.
+Add Homebrew to the Zsh environment on Apple Silicon:
 
-### Verify
+```bash
+grep -qxF 'eval "$(/opt/homebrew/bin/brew shellenv)"' ~/.zprofile 2>/dev/null \
+  || echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+```
+
+On an Intel Mac, use `/usr/local/bin/brew` instead:
+
+```bash
+grep -qxF 'eval "$(/usr/local/bin/brew shellenv)"' ~/.zprofile 2>/dev/null \
+  || echo 'eval "$(/usr/local/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/usr/local/bin/brew shellenv)"
+```
+
+Verify the installation:
 
 ```bash
 brew --version
 ```
+
+See the [official Homebrew installation guide for macOS](https://docs.brew.sh/Installation.html).
+
+### Ubuntu / Linux
+
+Install the required system packages:
+
+```bash
+sudo apt update
+sudo apt install -y build-essential procps curl file git
+```
+
+Install Homebrew with the official installer:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+Add Homebrew to the Bash environment:
+
+```bash
+grep -qxF 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' ~/.bashrc 2>/dev/null \
+  || echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"' >> ~/.bashrc
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+```
+
+Verify the installation:
+
+```bash
+brew --version
+```
+
+See the [official Homebrew on Linux guide](https://docs.brew.sh/Homebrew-on-Linux).
 
 ---
 
@@ -229,6 +273,9 @@ brew bundle --file ~/.Brewfile
 
 ## 6. Set Zsh as the Default Shell on Linux
 
+> [!NOTE]
+> Linux only. macOS users can skip this section and continue to step 8.
+
 Switch the default shell from Bash to Zsh:
 
 First, register the Homebrew Zsh binary:
@@ -256,7 +303,73 @@ This step is not required on systems already using Zsh.
 
 ---
 
-## 7. Sign in to Services
+## 7. Install Essential Applications on Ubuntu
+
+> [!NOTE]
+> Ubuntu only. macOS users can skip this section and continue to step 8.
+
+Homebrew Cask applications are skipped on Linux. Install these required applications separately on Ubuntu.
+
+### Google Chrome
+
+Download the Debian package from the official Google Chrome website:
+
+[**Download Google Chrome**](https://www.google.com/chrome/)
+
+Install the downloaded package:
+
+```bash
+sudo apt install ./google-chrome-stable_current_amd64.deb
+```
+
+### Tailscale
+
+Run the official Linux installer:
+
+```bash
+curl -fsSL https://tailscale.com/install.sh | sh
+```
+
+Connect and authenticate:
+
+```bash
+sudo tailscale up
+```
+
+See the [official Tailscale Linux installation guide](https://tailscale.com/docs/install/linux).
+
+### Visual Studio Code
+
+Install the official Snap package:
+
+```bash
+sudo snap install --classic code
+```
+
+See the [official VS Code Linux installation guide](https://code.visualstudio.com/docs/setup/linux).
+
+### Ghostty
+
+Install the Snap package listed in the official Ghostty installation guide:
+
+```bash
+sudo snap install ghostty --classic
+```
+
+Ghostty does not currently provide an official Linux binary. Review the package notes in the [official Ghostty installation guide](https://ghostty.org/docs/install/binary).
+
+### Verify
+
+```bash
+google-chrome --version
+tailscale version
+code --version
+ghostty --version
+```
+
+---
+
+## 8. Sign in to Services
 
 Recommended login order:
 
