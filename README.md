@@ -185,14 +185,20 @@ Initialize chezmoi with the copied SSH URL:
 chezmoi init git@github.com:<username>/<repository>.git
 ```
 
-### Enter Git identity on first setup only
+During the first initialization, enter your Git identity in the CLI:
 
 ```text
 Git User Name:
 Git Email:
 ```
 
-The values are stored in chezmoi's local configuration and can be reused the next time you rebuild the machine.
+The values are stored in chezmoi's local configuration and used to generate `~/.gitconfig`. You do not need to edit the template file manually.
+
+To enter the values again on an existing setup:
+
+```bash
+chezmoi init --prompt
+```
 
 ### Apply the dotfiles
 

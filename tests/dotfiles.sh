@@ -79,3 +79,15 @@ git config --file "$home_dir/.gitconfig" --list >/dev/null
 find "$home_dir/.config" -name '*.json' -print0 | xargs -0 jq empty
 
 ruby -c "$home_dir/.Brewfile" >/dev/null
+
+rendered_config="$(
+  chezmoi execute-template \
+    --config "$tmpdir/empty-chezmoi.toml" \
+    --init \
+    --promptString 'Git user name=CI User' \
+    --promptString 'Git email=ci@example.com' \
+    <"$repo_root/.chezmoi.toml.tmpl"
+)"
+
+grep -Fq 'name = "CI User"' <<<"$rendered_config"
+grep -Fq 'email = "ci@example.com"' <<<"$rendered_config"
