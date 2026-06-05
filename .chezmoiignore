@@ -1,6 +1,8 @@
 /.github
+/.githooks
 /.gitignore
 /assets
+/docs
 /LICENSE
 /README.md
 /tests

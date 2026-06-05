@@ -52,6 +52,8 @@ done
 # ========================================
 
 unwanted_paths=(
+  "$home_dir/.githooks"
+  "$home_dir/docs"
   "$home_dir/README.md"
   "$home_dir/LICENSE"
   "$home_dir/assets"

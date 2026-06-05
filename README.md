@@ -24,6 +24,7 @@ It covers the initial setup from Homebrew installation and GitHub SSH access to 
 - [4. Initialize Dotfiles](#4-initialize-dotfiles)
 - [5. Apply the Brewfile](#5-apply-the-brewfile)
 - [6. Sign in to Services](#6-sign-in-to-services)
+- [Optional Quality Checks](#optional-quality-checks)
 
 ## Dependencies
 
@@ -190,6 +191,14 @@ Recommended login order:
 ```bash
 gh auth login
 ```
+
+---
+
+## Optional Quality Checks
+
+This repository includes optional cross-platform tests, shell linting, formatting checks, and a local pre-commit hook.
+
+They are useful when actively maintaining the dotfiles, but they are not required for using the workstation setup. See [Tests and Git Hooks](docs/testing-and-hooks.md) for setup, commands, maintenance notes, and instructions for disabling or removing them.
 
 ---
 
