@@ -227,6 +227,7 @@ verify_shell_environment() (
   local home_dir
   local cache_dir
   local state_file
+  local zsh_binary
 
   tmpdir="$(mktemp -d)"
   trap 'rm -rf "$tmpdir"' EXIT
@@ -236,6 +237,7 @@ verify_shell_environment() (
   state_file="$tmpdir/chezmoistate.boltdb"
 
   mkdir -p "$home_dir" "$cache_dir"
+  zsh_binary="$(command -v zsh)"
 
   chezmoi apply \
     --source "$repo_root" \
@@ -246,7 +248,8 @@ verify_shell_environment() (
     --no-tty \
     --override-data '{"git":{"name":"CI User","email":"ci@example.com"}}'
 
-  HOME="$home_dir" zsh -ic '
+  # shellcheck disable=SC2016
+  HOME="$home_dir" PATH="/usr/bin:/bin" "$zsh_binary" -ic '
     [[ -n "$HOMEBREW_PREFIX" ]]
     [[ -d "$HOMEBREW_PREFIX" ]]
     [[ "$XDG_CONFIG_HOME" == "$HOME/.config" ]]

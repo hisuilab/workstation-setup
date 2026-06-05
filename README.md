@@ -24,7 +24,8 @@ It covers the initial setup from Homebrew installation and GitHub SSH access to 
 - [3. Install chezmoi](#3-install-chezmoi)
 - [4. Initialize Dotfiles](#4-initialize-dotfiles)
 - [5. Apply the Brewfile](#5-apply-the-brewfile)
-- [6. Sign in to Services](#6-sign-in-to-services)
+- [6. Set Zsh as the Default Shell on Linux](#6-set-zsh-as-the-default-shell-on-linux)
+- [7. Sign in to Services](#7-sign-in-to-services)
 - [Optional Quality Checks](#optional-quality-checks)
 
 ## Dependencies
@@ -73,7 +74,9 @@ This repository is an opinionated starting point rather than a universal worksta
 ↓
 6. Brewfile execution
 ↓
-7. Service logins
+7. Linux default shell setup
+↓
+8. Service logins
 ```
 
 ---
@@ -224,7 +227,36 @@ brew bundle --file ~/.Brewfile
 
 ---
 
-## 6. Sign in to Services
+## 6. Set Zsh as the Default Shell on Linux
+
+Switch the default shell from Bash to Zsh:
+
+First, register the Homebrew Zsh binary:
+
+```bash
+BREW_ZSH="$(brew --prefix)/bin/zsh"
+grep -qxF "$BREW_ZSH" /etc/shells || echo "$BREW_ZSH" | sudo tee -a /etc/shells
+```
+
+Set it as the default shell:
+
+```bash
+chsh -s "$BREW_ZSH"
+```
+
+Log out and sign in again, then verify:
+
+```bash
+echo "$SHELL"
+zsh --version
+brew --version
+```
+
+This step is not required on systems already using Zsh.
+
+---
+
+## 7. Sign in to Services
 
 Recommended login order:
 
