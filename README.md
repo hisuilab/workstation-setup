@@ -101,8 +101,7 @@ Host github.com
     HostName github.com
     User git
     IdentityFile ~/.ssh/github_ed25519
-    AddKeysToAgent yes
-    UseKeychain yes
+    IdentitiesOnly yes
 EOF
 ```
 
