@@ -17,6 +17,7 @@ It covers the initial setup from Homebrew installation and GitHub SSH access to 
 ## Table of Contents
 
 - [Dependencies](#dependencies)
+- [Create Your Repository](#create-your-repository)
 - [Bootstrap Steps](#bootstrap-steps)
 - [1. Install Homebrew](#1-install-homebrew)
 - [2. Set Up GitHub SSH Access](#2-set-up-github-ssh-access)
@@ -33,6 +34,29 @@ This setup assumes the following tools are available or will be installed during
 - [chezmoi](https://www.chezmoi.io/) — used to manage and apply dotfiles
 - [sheldon](https://sheldon.cli.rs/) — used to manage shell plugins/extensions
 - [Homebrew](https://brew.sh/) — used to install packages and apps on macOS and Linux
+
+## Create Your Repository
+
+> [!IMPORTANT]
+> Click the green **Use this template** button at the top of this repository, then select **Create a new repository**.
+
+1. Click **Use this template**
+2. Select **Create a new repository**
+3. Choose an owner and repository name
+4. Create the repository
+
+You can also open the creation page directly:
+
+[**Create a repository from this template**](https://github.com/new?template_name=workstation-setup&template_owner=hisuilab)
+
+Using a template creates a new repository without carrying over this repository's commit history. Before applying the dotfiles, review and customize:
+
+- `dot_Brewfile` for the packages and applications you want
+- `dot_config/private_karabiner/private_karabiner.json` for your keyboard
+- editor and terminal settings under `dot_config/`
+- macOS-specific and personal tools that may not apply to your environment
+
+This repository is an opinionated starting point rather than a universal workstation configuration.
 
 ## Bootstrap Steps
 
@@ -60,6 +84,15 @@ Follow the official installation guide for your operating system:
 
 - [Install Homebrew on macOS](https://docs.brew.sh/Installation.html)
 - [Install Homebrew on Linux or WSL](https://docs.brew.sh/Homebrew-on-Linux)
+
+### Ubuntu / Debian prerequisites
+
+Some minimal Linux installations do not include `curl` or `git`. Install them before running the Homebrew installer:
+
+```bash
+sudo apt update
+sudo apt install -y curl git
+```
 
 After installation, follow the post-install instructions shown by Homebrew to add it to your shell environment.
 
@@ -140,14 +173,16 @@ brew install chezmoi
 
 ## 4. Initialize Dotfiles
 
-```bash
-chezmoi init git@github.com:<username>/<dotfiles-repository>.git
-```
+Open the repository you created from the template on GitHub:
 
-### First apply
+1. Select **Code**
+2. Select the **SSH** tab
+3. Copy the repository URL
+
+Initialize chezmoi with the copied SSH URL:
 
 ```bash
-chezmoi apply
+chezmoi init git@github.com:<username>/<repository>.git
 ```
 
 ### Enter Git identity on first setup only
@@ -158,6 +193,14 @@ Git Email:
 ```
 
 The values are stored in chezmoi's local configuration and can be reused the next time you rebuild the machine.
+
+### Apply the dotfiles
+
+Review the source files, then apply them:
+
+```bash
+chezmoi apply
+```
 
 ### Verify Git configuration
 
