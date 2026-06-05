@@ -1,0 +1,121 @@
+# ========================================
+# 1. Browser
+# ========================================
+
+cask "google-chrome"
+
+# ========================================
+# 2. VPN
+# ========================================
+
+cask "tailscale-app"
+
+# ========================================
+# 3. Dotfiles
+# Foundation for the rest of the environment setup
+# ========================================
+
+brew "chezmoi"                 # Dotfile manager
+
+# ========================================
+# 4. CLI Tools
+# Used after applying dotfiles with chezmoi
+# ========================================
+
+brew "git"                     # Distributed version control system
+brew "gh"                      # GitHub command-line interface
+brew "zsh"                     # Modern interactive shell
+brew "powerlevel10k"           # Fast and customizable Zsh prompt theme
+brew "zoxide"                  # Smart directory navigation tool
+brew "zsh-autosuggestions"     # Fish-like command suggestions for Zsh
+brew "zsh-completions"         # Additional command completions for Zsh
+brew "zsh-syntax-highlighting" # Syntax highlighting for Zsh commands
+brew "wget"                    # Command-line file downloader
+brew "curl"                    # Tool for transferring data via URLs
+brew "jq"                      # Command-line JSON processor
+brew "eza"                     # Modern replacement for ls
+brew "fd"                      # Simple and fast alternative to find
+brew "ripgrep"                 # Extremely fast recursive text search
+brew "fzf"                     # Command-line fuzzy finder
+brew "bat"                     # Cat clone with syntax highlighting
+brew "unzip"                   # Extract ZIP archives
+brew "tag"                     # Manage Finder tags from the CLI
+
+# ========================================
+# 5. Language Runtime
+# ========================================
+
+brew "nvm"                     # Node.js version manager
+brew "uv"                      # Fast Python package and project manager
+
+# ========================================
+# 6. Fonts
+# For p10k and Nerd Font support
+# ========================================
+
+cask "font-meslo-lg-nerd-font"
+
+# ========================================
+# 7. Terminal / Editors
+# ========================================
+
+cask "visual-studio-code"
+cask "ghostty"                 # GPU-accelerated terminal emulator
+cask "zed"                     # High-performance collaborative code editor
+cask "codex-app"               # OpenAI Codex desktop application
+cask "antigravity"             # Google Gemini desktop application
+
+# ========================================
+# 8. Cloud Sync
+# ========================================
+
+cask "google-drive"
+
+# ========================================
+# 9. Containers
+# ========================================
+
+if OS.mac?
+  cask "docker-desktop"        # Docker engine and desktop management UI
+end
+
+if OS.linux?
+  brew "docker"                # Docker CLI and Compose
+end
+
+# ========================================
+# 10. Local LLM
+# ========================================
+
+brew "ollama"                  # Run local AI models
+
+# ========================================
+# 11. Personal Tools
+# Not required for development, but required for me 😄
+# ========================================
+
+# device
+cask "karabiner-elements"      # Keyboard remapping tool
+cask "logi-options+"           # Logitech device configuration software
+
+# communication
+cask "discord"
+cask "slack"
+cask "zoom"
+
+# creative
+cask "obs"                     # Live streaming and recording software
+cask "elgato-stream-deck"      # Stream Deck device configuration
+cask "affinity"                # Professional creative suite
+cask "blender"                 # 3D modeling and rendering software
+
+# ========================================
+# 12. App Store
+# ========================================
+
+brew "mas"
+
+mas "RunCat", id: 1429033973    # 🐈 Critical development infrastructure
+
+# Optional, but required for iOS/macOS development
+mas "Xcode", id: 497799835      # Required for shipping apps to Apple platforms

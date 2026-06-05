@@ -1,0 +1,114 @@
+# ========================================
+# 1. Powerlevel10k Instant Prompt
+# Load prompt cache for faster shell startup
+# ========================================
+
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+# ========================================
+# 2. Environment
+# Core environment variables and aliases
+# ========================================
+
+# Homebrew environment
+if command -v brew >/dev/null 2>&1; then
+    eval "$(brew shellenv)"
+    export HOMEBREW_PREFIX="$(brew --prefix)"
+fi
+
+# XDG directories
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
+
+mkdir -p "$XDG_CACHE_HOME"
+
+# Development workspace
+export DEV_DIR="$HOME/Developments"
+[[ -d "$DEV_DIR" ]] || mkdir -p "$DEV_DIR"
+
+# Python environment
+export PATH="$HOME/.local/bin:$PATH"
+
+# Aliases
+alias dev="cd $DEV_DIR"
+alias python="python3"
+alias pip="uv pip"
+
+# ========================================
+# 3. Completion
+# Shell completion system
+# ========================================
+
+# Homebrew completions
+if [[ -n "$HOMEBREW_PREFIX" ]]; then
+    fpath+=("$HOMEBREW_PREFIX/share/zsh-completions")
+fi
+
+# Initialize completion system
+autoload -Uz compinit
+compinit -d "$XDG_CACHE_HOME/.zcompdump"
+
+# UV completion
+if command -v uv >/dev/null 2>&1; then
+    eval "$(uv generate-shell-completion zsh 2>/dev/null)"
+fi
+
+# ========================================
+# 4. Tools
+# CLI tool integrations
+# ========================================
+
+# zoxide
+if command -v zoxide >/dev/null 2>&1; then
+    eval "$(zoxide init zsh)"
+fi
+
+# zsh-autosuggestions
+if [[ -n "$HOMEBREW_PREFIX" ]] &&
+   [[ -f "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]]; then
+    source "$HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+fi
+
+# zsh-syntax-highlighting
+if [[ -n "$HOMEBREW_PREFIX" ]] &&
+   [[ -f "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]]; then
+    source "$HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+fi
+
+# NVM lazy loading
+if [[ -n "$HOMEBREW_PREFIX" ]] &&
+   [[ -d "$HOMEBREW_PREFIX/opt/nvm" ]]; then
+
+    export NVM_DIR="$HOME/.nvm"
+
+    _load_nvm() {
+        mkdir -p "$NVM_DIR"
+        source "$HOMEBREW_PREFIX/opt/nvm/nvm.sh"
+    }
+
+    for cmd in nvm node npm npx; do
+        eval "
+        $cmd() {
+            unset -f nvm node npm npx
+            _load_nvm
+            $cmd \"\$@\"
+        }
+        "
+    done
+fi
+
+# ========================================
+# 5. Prompt
+# Powerlevel10k theme configuration
+# ========================================
+
+# Load Powerlevel10k theme
+if [[ -n "$HOMEBREW_PREFIX" ]] &&
+   [[ -f "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
+    source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
+fi
+
+# Load Powerlevel10k settings
+[[ -f "$HOME/.p10k.zsh" ]] && source "$HOME/.p10k.zsh"

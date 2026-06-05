@@ -1,0 +1,35 @@
+[user]
+    name = {{ .git.name }}
+    email = {{ .git.email }}
+
+[init]
+	# Set the default branch name to "main" for new repositories
+	defaultBranch = main
+
+[pull]
+	# Use fast-forward merges when possible; otherwise fetch only
+	ff = only
+	# Do not use rebase; use merge instead
+	rebase = false
+
+[core]
+	# Use LF line endings instead of Windows CRLF
+	eol = lf
+	# Treat file names as case-sensitive
+	ignorecase = false
+	# Display non-ASCII file names, including Japanese, without escaping
+	quotepath = false
+
+
+[fetch]
+	# Automatically remove local branches that were deleted on the remote during fetch
+	prune = true
+
+[rebase]
+	# Automatically enable squash to combine unnecessary commits
+	autosquash = true
+
+[credential]
+	# Specify the helper program for managing Git credentials (for Windows environments)
+	[credential]
+    helper = "/mnt/c/Program Files/Git/mingw64/bin/git-credential-manager.exe"

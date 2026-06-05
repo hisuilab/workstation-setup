@@ -1,0 +1,16 @@
+# style
+background-opacity = 0.7
+theme = Kanagawa Wave
+font-size = 16
+window-padding-x = 8
+window-padding-y = 8
+cursor-style-blink = false
+
+# macos
+macos-titlebar-style = tabs
+macos-titlebar-proxy-icon = hidden
+
+# custom
+keybind = global:ctrl+enter=toggle_quick_terminal
+initial-window = false
+quit-after-last-window-closed = false
