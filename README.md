@@ -351,13 +351,22 @@ See the [official VS Code Linux installation guide](https://code.visualstudio.co
 
 ### Ghostty
 
-Install the Snap package listed in the official Ghostty installation guide:
+> [!NOTE]
+> Ghostty installation options on Ubuntu are still evolving. Check the latest instructions in the [Ghostty Ubuntu package repository](https://github.com/mkasberg/ghostty-ubuntu) or the [official Ghostty Linux documentation](https://ghostty.org/docs/linux) before installing.
+
+The following community-maintained PPA installation was confirmed to work on Ubuntu 26.04:
 
 ```bash
-sudo snap install ghostty --classic
+sudo add-apt-repository ppa:mkasberg/ghostty-ubuntu
+sudo apt update
+sudo apt install ghostty
 ```
 
-Ghostty does not currently provide an official Linux binary. Review the package notes in the [official Ghostty installation guide](https://ghostty.org/docs/install/binary).
+Restart Ubuntu after installation.
+
+Ubuntu 26.04 and later also provide Ghostty through the official Ubuntu repositories. The PPA may provide a newer release.
+
+See the [Ghostty Ubuntu package repository](https://github.com/mkasberg/ghostty-ubuntu) and the [official Ghostty Linux installation guide](https://ghostty.org/docs/linux).
 
 ### Verify
 
