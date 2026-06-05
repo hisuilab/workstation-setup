@@ -31,7 +31,7 @@ This setup assumes the following tools are available or will be installed during
 
 - [chezmoi](https://www.chezmoi.io/) — used to manage and apply dotfiles
 - [sheldon](https://sheldon.cli.rs/) — used to manage shell plugins/extensions
-- [Homebrew](https://brew.sh/) — used to install packages and apps on macOS
+- [Homebrew](https://brew.sh/) — used to install packages and apps on macOS and Linux
 
 ## Bootstrap Steps
 
@@ -55,16 +55,12 @@ This setup assumes the following tools are available or will be installed during
 
 ## 1. Install Homebrew
 
-```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-```
+Follow the official installation guide for your operating system:
 
-### Apple Silicon
+- [Install Homebrew on macOS](https://docs.brew.sh/Installation.html)
+- [Install Homebrew on Linux or WSL](https://docs.brew.sh/Homebrew-on-Linux)
 
-```bash
-echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
-eval "$(/opt/homebrew/bin/brew shellenv)"
-```
+After installation, follow the post-install instructions shown by Homebrew to add it to your shell environment.
 
 ### Verify
 
