@@ -61,6 +61,8 @@ ci_formulas=(
   fzf
   bat
   unzip
+  shfmt
+  shellcheck
   nvm
   uv
 )
@@ -157,6 +159,12 @@ check_formula() {
     ripgrep)
       command -v rg >/dev/null
       ;;
+    shellcheck)
+      command -v shellcheck >/dev/null
+      ;;
+    shfmt)
+      command -v shfmt >/dev/null
+      ;;
     tag)
       command -v tag >/dev/null
       ;;
@@ -212,7 +220,7 @@ verify_formulas() {
 # Shell environment checks
 # ========================================
 
-verify_shell_environment() {
+verify_shell_environment() (
   require_brew
 
   local tmpdir
@@ -221,7 +229,7 @@ verify_shell_environment() {
   local state_file
 
   tmpdir="$(mktemp -d)"
-  trap "rm -rf '$tmpdir'" EXIT
+  trap 'rm -rf "$tmpdir"' EXIT
 
   home_dir="$tmpdir/home"
   cache_dir="$tmpdir/cache"
@@ -252,7 +260,7 @@ verify_shell_environment() {
     command -v uv >/dev/null
     type nvm >/dev/null
   '
-}
+)
 
 # ========================================
 # Command dispatch

@@ -39,6 +39,8 @@ brew "ripgrep"                 # Extremely fast recursive text search
 brew "fzf"                     # Command-line fuzzy finder
 brew "bat"                     # Cat clone with syntax highlighting
 brew "unzip"                   # Extract ZIP archives
+brew "shfmt"                   # Shell script formatter
+brew "shellcheck"              # Shell script static analysis tool
 if OS.mac?
   brew "tag"                   # Manage Finder tags from the CLI
 end
