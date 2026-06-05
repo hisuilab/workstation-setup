@@ -331,7 +331,13 @@ Run the official Linux installer:
 curl -fsSL https://tailscale.com/install.sh | sh
 ```
 
-Connect and authenticate:
+Restart Ubuntu before authentication:
+
+```bash
+sudo reboot
+```
+
+After restarting, connect and authenticate:
 
 ```bash
 sudo tailscale up
@@ -362,7 +368,11 @@ sudo apt update
 sudo apt install ghostty
 ```
 
-Restart Ubuntu after installation.
+Restart Ubuntu after installation:
+
+```bash
+sudo reboot
+```
 
 Ubuntu 26.04 and later also provide Ghostty through the official Ubuntu repositories. The PPA may provide a newer release.
 
