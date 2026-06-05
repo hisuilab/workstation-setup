@@ -319,6 +319,7 @@ Download the Debian package from the official Google Chrome website:
 Install the downloaded package:
 
 ```bash
+cd "$(xdg-user-dir DOWNLOAD)"
 sudo apt install ./google-chrome-stable_current_amd64.deb
 ```
 
