@@ -2,16 +2,28 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-A lightweight bootstrap guide for restoring a personal macOS workstation quickly.
+---
 
-This repository is intended to help you rebuild a Mac from scratch with minimal manual work:
+![Workstation Setup thumbnail](assets/thumbnail.png)
 
-1. install the required base tools
-2. set up GitHub SSH access
-3. install and initialize `chezmoi`
-4. restore dotfiles and shell/tooling configuration
-5. install Homebrew packages and apps
-6. sign in to the services you use daily
+---
+
+## Overview
+
+This repository provides a lightweight bootstrap flow for restoring a personal macOS workstation with minimal manual work.
+
+It covers the initial setup from Homebrew installation and GitHub SSH access to dotfile restoration, Homebrew bundle installation, and daily service login.
+
+## Table of Contents
+
+- [Dependencies](#dependencies)
+- [Bootstrap Steps](#bootstrap-steps)
+- [1. Install Homebrew](#1-install-homebrew)
+- [2. Set Up GitHub SSH Access](#2-set-up-github-ssh-access)
+- [3. Install chezmoi](#3-install-chezmoi)
+- [4. Initialize Dotfiles](#4-initialize-dotfiles)
+- [5. Apply the Brewfile](#5-apply-the-brewfile)
+- [6. Sign in to Services](#6-sign-in-to-services)
 
 ## Dependencies
 
