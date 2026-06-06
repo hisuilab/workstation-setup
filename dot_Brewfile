@@ -83,15 +83,13 @@ if OS.mac?
   cask "docker-desktop"        # Docker engine and desktop management UI
 end
 
-if OS.linux?
-  brew "docker"                # Docker CLI and Compose
-end
-
 # ========================================
 # 10. Local LLM
 # ========================================
 
-brew "ollama"                  # Run local AI models
+if OS.mac?
+  brew "ollama"                # Run local AI models
+end
 
 # ========================================
 # 11. Personal Tools

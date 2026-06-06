@@ -5,37 +5,48 @@ repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 brewfile="$repo_root/dot_Brewfile"
 
 # ========================================
-# Brewfile formula parsing
+# Brewfile package parsing
 # ========================================
 
-extract_formulas() {
-  ruby - "$brewfile" <<'RUBY'
+extract_packages() {
+  local target_os="${1:-current}"
+
+  BREWFILE_TARGET_OS="$target_os" ruby - "$brewfile" <<'RUBY'
 brewfile = ARGV.fetch(0)
-formulas = []
+target_os = ENV.fetch("BREWFILE_TARGET_OS")
+host_is_mac = /darwin/ === RUBY_PLATFORM
+host_is_linux = /linux/ === RUBY_PLATFORM
+packages = []
 
 module OS
-  def self.mac?
-    /darwin/ === RUBY_PLATFORM
-  end
+end
 
-  def self.linux?
-    /linux/ === RUBY_PLATFORM
-  end
+OS.define_singleton_method(:mac?) do
+  target_os == "mac" || (target_os == "current" && host_is_mac)
+end
+
+OS.define_singleton_method(:linux?) do
+  target_os == "linux" || (target_os == "current" && host_is_linux)
 end
 
 define_method(:brew) do |name, *|
-  formulas << name
+  packages << "brew:#{name}"
 end
 
-define_method(:cask) do |*|
+define_method(:cask) do |name, *|
+  packages << "cask:#{name}"
 end
 
 define_method(:mas) do |*|
 end
 
 instance_eval(File.read(brewfile), brewfile)
-puts formulas
+puts packages
 RUBY
+}
+
+extract_formulas() {
+  extract_packages "${1:-current}" | sed -n 's/^brew://p'
 }
 
 # ========================================
@@ -92,6 +103,22 @@ assert_declared_in_brewfile() {
   done
 }
 
+assert_platform_packages() {
+  local mac_packages
+  local linux_packages
+
+  mac_packages="$(extract_packages mac)"
+  linux_packages="$(extract_packages linux)"
+
+  grep -Fxq "cask:docker-desktop" <<<"$mac_packages"
+  grep -Fxq "brew:ollama" <<<"$mac_packages"
+
+  if grep -Eq '^(brew:docker|brew:ollama|cask:docker-desktop)$' <<<"$linux_packages"; then
+    echo "Docker and Ollama must use their official installation methods on Linux." >&2
+    exit 1
+  fi
+}
+
 # ========================================
 # Installation
 # ========================================
@@ -122,9 +149,6 @@ check_formula() {
       ;;
     curl)
       command -v curl >/dev/null
-      ;;
-    docker)
-      command -v docker >/dev/null
       ;;
     eza)
       command -v eza >/dev/null
@@ -271,14 +295,17 @@ verify_shell_environment() (
 
 case "${1:-verify-ci}" in
   install-ci)
+    assert_platform_packages
     install_ci_formulas
     ;;
   verify-ci)
+    assert_platform_packages
     assert_declared_in_brewfile
     verify_formulas "${ci_formulas[@]}"
     verify_shell_environment
     ;;
   verify-all)
+    assert_platform_packages
     verify_formulas
     verify_shell_environment
     ;;

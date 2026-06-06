@@ -269,6 +269,8 @@ git config --global --list
 brew bundle --file ~/.Brewfile
 ```
 
+On macOS, the Brewfile installs Docker Desktop and Ollama. On Linux, install Docker Engine and Ollama separately in step 7 using their official installation methods.
+
 ---
 
 ## 6. Set Zsh as the Default Shell on Linux
@@ -378,6 +380,38 @@ Ubuntu 26.04 and later also provide Ghostty through the official Ubuntu reposito
 
 See the [Ghostty Ubuntu package repository](https://github.com/mkasberg/ghostty-ubuntu) and the [official Ghostty Linux installation guide](https://ghostty.org/docs/linux).
 
+### Docker Engine
+
+Do not install Docker through Homebrew on Ubuntu. Follow the official Docker Engine installation guide:
+
+[**Install Docker Engine on Ubuntu**](https://docs.docker.com/engine/install/ubuntu/)
+
+After installation, verify Docker Engine and Docker Compose:
+
+```bash
+docker --version
+docker compose version
+sudo docker run hello-world
+```
+
+To run Docker without `sudo`, follow the [official Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
+
+### Ollama
+
+Install Ollama with the official Linux installer:
+
+```bash
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Verify the installation:
+
+```bash
+ollama --version
+```
+
+See the [official Ollama Linux installation guide](https://docs.ollama.com/linux).
+
 ### Verify
 
 ```bash
@@ -385,6 +419,9 @@ google-chrome --version
 tailscale version
 code --version
 ghostty --version
+docker --version
+docker compose version
+ollama --version
 ```
 
 ---
@@ -399,7 +436,7 @@ Recommended login order:
 4. Slack
 5. Discord
 6. Zoom
-7. Docker Desktop
+7. Docker Desktop (macOS) or Docker Engine (Linux)
 8. GitHub CLI Auth
 
 ```bash
