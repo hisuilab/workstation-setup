@@ -255,6 +255,8 @@ Review the source files, then apply them:
 chezmoi apply
 ```
 
+This also sets the mouse and trackpad pointer speeds to maximum on macOS and Ubuntu GNOME. On macOS, sign out and back in if the new speed is not applied immediately.
+
 ### Verify Git configuration
 
 ```bash

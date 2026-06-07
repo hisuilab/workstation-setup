@@ -25,6 +25,7 @@ chezmoi apply \
   --destination "$home_dir" \
   --cache "$cache_dir" \
   --persistent-state "$state_file" \
+  --exclude scripts \
   --force \
   --no-tty \
   --override-data '{"git":{"name":"CI User","email":"ci@example.com"}}'
@@ -79,6 +80,12 @@ git config --file "$home_dir/.gitconfig" --list >/dev/null
 find "$home_dir/.config" -name '*.json' -print0 | xargs -0 jq empty
 
 ruby -c "$home_dir/.Brewfile" >/dev/null
+
+rendered_pointer_script="$tmpdir/pointer-speed.sh"
+chezmoi execute-template \
+  <"$repo_root/.chezmoiscripts/run_onchange_after_10-pointer-speed.sh.tmpl" \
+  >"$rendered_pointer_script"
+bash -n "$rendered_pointer_script"
 
 rendered_config="$(
   chezmoi execute-template \

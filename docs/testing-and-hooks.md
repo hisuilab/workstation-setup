@@ -20,6 +20,16 @@ This test applies the repository to a temporary home directory and verifies:
 
 It does not modify your real home directory.
 
+### Pointer Speed
+
+```bash
+bash tests/pointer-speed.sh
+```
+
+This test renders the pointer speed script for the current operating system and verifies its commands with mocked system tools. It does not change the pointer speed of the machine running the test.
+
+The macOS and Ubuntu branches are both covered by the GitHub Actions operating-system matrix.
+
 ### Homebrew Tools
 
 Check the CLI tools used by CI:

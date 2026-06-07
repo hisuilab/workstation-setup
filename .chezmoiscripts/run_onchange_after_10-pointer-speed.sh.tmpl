@@ -1,0 +1,27 @@
+{{- if eq .chezmoi.os "darwin" }}
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Set the macOS mouse and trackpad tracking speeds to maximum.
+defaults write NSGlobalDomain com.apple.mouse.scaling -float 3.0
+defaults write NSGlobalDomain com.apple.trackpad.scaling -float 3.0
+{{- else if eq .chezmoi.os "linux" }}
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Set GNOME mouse and touchpad pointer speeds to maximum.
+if ! command -v gsettings >/dev/null 2>&1; then
+  echo "Skipping pointer speed settings: gsettings is not installed." >&2
+  exit 0
+fi
+
+schemas="$(gsettings list-schemas)"
+
+if grep -Fxq "org.gnome.desktop.peripherals.mouse" <<<"$schemas"; then
+  gsettings set org.gnome.desktop.peripherals.mouse speed 1.0
+fi
+
+if grep -Fxq "org.gnome.desktop.peripherals.touchpad" <<<"$schemas"; then
+  gsettings set org.gnome.desktop.peripherals.touchpad speed 1.0
+fi
+{{- end }}

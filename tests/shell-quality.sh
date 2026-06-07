@@ -6,6 +6,7 @@ shell_scripts=(
   "$repo_root/.githooks/pre-commit"
   "$repo_root/tests/brew-tools.sh"
   "$repo_root/tests/dotfiles.sh"
+  "$repo_root/tests/pointer-speed.sh"
   "$repo_root/tests/shell-quality.sh"
 )
 

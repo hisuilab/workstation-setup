@@ -268,6 +268,7 @@ verify_shell_environment() (
     --destination "$home_dir" \
     --cache "$cache_dir" \
     --persistent-state "$state_file" \
+    --exclude scripts \
     --force \
     --no-tty \
     --override-data '{"git":{"name":"CI User","email":"ci@example.com"}}'

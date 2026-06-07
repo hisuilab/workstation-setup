@@ -45,4 +45,5 @@ jobs:
         run: |
           bash tests/dotfiles.sh
           bash tests/brew-tools.sh verify-ci
+          bash tests/pointer-speed.sh
           bash tests/shell-quality.sh
